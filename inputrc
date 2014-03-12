@@ -7,14 +7,15 @@
 # Show all if ambigious.
 set show-all-if-ambiguous on
 
-# Add / to symlink to directory
-set mark-symlinked-directories on
-
 # 8Bits supports.
 set meta-flag on
-set convert-meta off
 set input-meta on
+set convert-meta off
 set output-meta on
+
+# Completed names which are symbolic links to
+# directories have a slash appended.
+set mark-symlinked-directories on
 
 # bash completions does not use more
 set page-completions off
@@ -30,6 +31,11 @@ $if mode=emacs
 
 "[1~": beginning-of-line	# Home
 "[4~": end-of-line		# End
+# commented out keymappings for pgup/pgdown to reach begin/end of history
+#"\e[5~": beginning-of-history
+#"\e[6~": end-of-history
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
 
 # typing the beginning of a previous command then
 # PgUp/PgDw cycles trough history only for matching entries
@@ -39,6 +45,8 @@ $if mode=emacs
 # those two are for rxvt
 "\e[7~":beginning-of-line
 "\e[8~":end-of-line
+"\eOc": forward-word
+"\eOd": backward-word
 
 # on some xterm
 "\e[H": beginning-of-line
