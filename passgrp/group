@@ -29,4 +29,12 @@ audio::81:
 video::82:
 dialout::83:
 users::100:
+messagebus::101:
+systemd-journal::102:
+systemd-network::103:
+systemd-timesync::104:
+systemd-resolve::105:
+systemd-busproxy::106:
+systemd-journal-gateway::107:
+input::107:
 nogroup::65534:
