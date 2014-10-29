@@ -3,7 +3,7 @@ VERSION = 2.8.6
 GITPATH = git@abf.io:omv_software/setup.git
 
 LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
-	motd printcap protocols securetty services shells profile \
+	motd printcap protocols services shells profile \
 	filesystems fstab resolv.conf hosts
 
 subdir = passgrp
