@@ -32,7 +32,6 @@ install:
 	for i in $(LIST); do \
 		cp -avf $$i $(DESTDIR)/etc/$$i; \
 	done
-	chmod 0600 $(DESTDIR)/etc/securetty
 	touch $(DESTDIR)/var/log/lastlog
 
 # rules to build a public distribution
