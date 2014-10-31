@@ -1,5 +1,5 @@
 PACKAGE = setup
-VERSION = 2.8.6
+VERSION = 2.8.7
 GITPATH = git@abf.io:omv_software/setup.git
 
 LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
