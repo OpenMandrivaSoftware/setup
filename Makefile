@@ -1,31 +1,19 @@
 PACKAGE = setup
 VERSION = 2.8.8
-GITPATH = git@abf.io:omv_software/setup.git
+GITPATH = git@abf.rosalinux.ru:software/setup.git
 
 LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
 	motd printcap protocols services shells profile \
 	filesystems fstab resolv.conf hosts
 
-subdir = passgrp
-
-FILES = $(subdir) $(LIST) Makefile NEWS
+FILES = $(LIST) Makefile NEWS
 
 all: 
-	@for dir in $(subdir);do \
-		make -C $$dir all ;\
-	done
 
 clean:
-	@for dir in $(subdir);do \
-		make -C $$dir clean ;\
-	done
 	rm -f *~ \#*\#
 
 install:
-	@for dir in $(subdir); do \
-		make -C $$dir install DESTDIR=$(DESTDIR);\
-	done
-
 	install -d -m 755 $(DESTDIR)/etc/
 	install -d -m 755 $(DESTDIR)/etc/profile.d
 	install -d -m 755 $(DESTDIR)/var/log/
@@ -33,6 +21,11 @@ install:
 		cp -avf $$i $(DESTDIR)/etc/$$i; \
 	done
 	touch $(DESTDIR)/var/log/lastlog
+	install -m644 group -D $(DESTDIR)/etc/group
+	sed -e 's/:[0-9]\+:/::/g' group > $(DESTDIR)/etc/gshadow
+	install -m644 passwd -D $(DESTDIR)/etc/passwd
+	sed -e "s/:.*/:*:`expr $(shell date +%s) / 86400`:0:99999:7:::/" passwd > $(DESTDIR)/etc/shadow
+	sed -i -e 's/^\([^:]\+\):[^:]*:/\1:x:/' $(DESTDIR)/etc/{passwd,group}
 
 # rules to build a public distribution
 

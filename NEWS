@@ -1,3 +1,62 @@
+	* add /usr/local/games to the PATH in /etc/profile
+
+2014-07-10 Per Øyvind Karlsen  <proyvind@moondrake.org> 2.8.6
+
+	* add default 'ftp' group
+	* add default group 'lusers' with gid 1000 to avoid warnings from
+	  adduser when first adding
+	* add opendns & google public dns servers as default for /etc/resolv.conf
+	  (making chroots less of a hazzle at least;)
+
+2014-05-25 Per Øyvind Karlsen  <proyvind@moondrake.org> 2.8.5
+
+	* add default 'messagebus' user
+	* change gid of 'screen' to 84
+
+2014-05-22 Per Øyvind Karlsen <proyvind@moondrake.org> 2.8.4
+
+	* fix path to /bin/halt for halt user
+	* fix path to /sbin/nologin for systemd-journal user
+
+2014-05-20 Per Øyvind Karlsen <proyvind@moondrake.org> 2.8.3
+
+	* create group 'screen' by default
+
+2014-05-07 Per Øyvind Karlsen <proyvind@moondrake.org> 2.8.2
+
+	* add nscd user & group by default
+	* create /etc/profile.d
+	* create user systemd-journal-gateway & groups systemd-journal-gateway
+	  by default
+
+2014-03-13 Per Øyvind Karlsen <proyvind@moondrake.org> 2.8.1
+
+	* set login shell to /sbin/nologin for system users
+	* create group messagebus by default
+
+2013-12-08 Per Øyvind Karlsen <proyvind@moondrake.org> 2.8.0
+
+	* do passwd, group & shadow conversion in 'make install' rather than in
+	  scriptlet
+	* shells: add /sbin/nologin
+	* services: sync with latest IANA
+	* securetty: sync with fedora
+	* protocols: update to latest IANA
+	* inputrc: use history-search-backward/forward for pageup/pagedown
+	* /etc/inputrc: add support for ctrl+arrow shortcut in rxvt
+	* drop order hosts,bind from setup, no longer used by glibc
+	  (rhbz#703049)
+	* /etc/hosts: adjust aliases to make IPv6 work out of the box
+	* update /etc/filesystems with some additional filesystems with
+	  /proc/filesystems being read afterwards as well
+	* create utempter group by default
+	* fix devpts permissions (bero)
+	* create group lock by default (bero)
+
+2013-03-30 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.7.22
+
+	* sync mounts in /etc/fstab to be consistent with systemd's
+
 2012-09-09 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.7.21
 
 	* don't create /etc/mtab
