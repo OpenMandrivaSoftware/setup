@@ -1,6 +1,6 @@
 PACKAGE = setup
 VERSION = 2.8.8
-GITPATH = git@abf.rosalinux.ru:software/setup.git
+GITPATH = git@abf.io:omv_software/setup.git
 
 LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
 	motd printcap protocols services shells profile \
