@@ -3,7 +3,7 @@ VERSION = 2.8.8
 GITPATH = git@abf.io:omv_software/setup.git
 
 LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
-	motd printcap protocols services shells profile \
+	motd motd-ssh printcap protocols services shells profile \
 	filesystems fstab resolv.conf hosts
 
 FILES = $(LIST) Makefile NEWS
