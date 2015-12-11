@@ -1,8 +1,8 @@
-ext2
 ext4
 ext3
-f2fs
+ext2
 btrfs
+f2fs
 jfs
 xfs
 nodev proc
