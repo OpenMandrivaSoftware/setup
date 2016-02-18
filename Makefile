@@ -1,6 +1,6 @@
 PACKAGE = setup
 VERSION = 2.8.9
-GITPATH = git@abf.io:omv_software/setup.git
+GITPATH = git@github.com:OpenMandrivaSoftware/setup.git
 
 LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
 	motd motd-ssh printcap protocols services shells profile \
@@ -8,7 +8,7 @@ LIST =  csh.cshrc csh.login host.conf hosts.allow hosts.deny inputrc \
 
 FILES = $(LIST) Makefile NEWS
 
-all: 
+all:
 
 clean:
 	rm -f *~ \#*\#
