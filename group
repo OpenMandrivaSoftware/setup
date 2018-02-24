@@ -37,3 +37,4 @@ users::100:
 input::101:
 lusers::1000:
 nogroup::65534:
+nopasswd::999
