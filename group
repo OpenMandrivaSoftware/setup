@@ -13,6 +13,7 @@ mail::12:
 news::13:
 uucp::14:
 man::15:
+rpm::16:
 floppy::19:
 games::20:
 tape::21:
