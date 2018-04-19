@@ -1,5 +1,5 @@
 PACKAGE = setup
-VERSION = 2.8.10
+VERSION = 2.9.1
 GITPATH = git@github.com:OpenMandrivaSoftware/setup.git
 
 LIST =  csh.cshrc csh.login ethertypes host.conf hosts.allow hosts.deny inputrc \
