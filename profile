@@ -3,22 +3,22 @@
 
 loginsh=1
 
-if [ "$UID" -ge 500 ] ; then
+if [ "$UID" -ge 500 ]; then
     if ! echo ${PATH} |grep -q /usr/local/games ; then
-        PATH=$PATH:/usr/local/games
+	PATH=$PATH:/usr/local/games
     fi
-    if ! echo ${PATH} |grep -q /usr/games ; then
-        PATH=$PATH:/usr/games
+    if ! echo ${PATH} | grep -q /usr/games ; then
+	PATH=$PATH:/usr/games
     fi
 fi
 
 umask 022
 
-USER=`id -un`
+USER="$(id -un)"
 LOGNAME=$USER
 MAIL="/var/spool/mail/$USER"
 HISTCONTROL=ignoredups
-HOSTNAME=`/bin/hostname`
+HOSTNAME="$(/bin/hostname 2>/dev/null)"
 HISTSIZE=1000
 
 if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ]; then
@@ -33,9 +33,9 @@ export PATH PS1 USER LOGNAME MAIL HOSTNAME INPUTRC NLSPATH
 export HISTCONTROL HISTSIZE 
 
 for i in /etc/profile.d/*.sh ; do
-	if [ -r $i ]; then
-		. $i
-	fi
+    if [ -r "$i" ]; then
+	. "$i"
+    fi
 done
 
 unset i
