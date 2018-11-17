@@ -1,5 +1,5 @@
 PACKAGE = setup
-VERSION = 2.9.1
+VERSION = 2.9.2
 GITPATH = git@github.com:OpenMandrivaSoftware/setup.git
 
 LIST =  csh.cshrc csh.login ethertypes host.conf hosts.allow hosts.deny inputrc \
@@ -20,6 +20,10 @@ install:
 	for i in $(LIST); do \
 		cp -avf $$i $(DESTDIR)/etc/$$i; \
 	done
+	install -m 755 10lang.sh $(DESTDIR)/etc/profile.d/10lang.sh
+	install -m 755 10lang.csh $(DESTDIR)/etc/profile.d/10lang.csh
+	install -m 755 10inputrc.sh $(DESTDIR)/etc/profile.d/10inputrc.sh
+	install -m 755 10inputrc.csh $(DESTDIR)/etc/profile.d/10inputrc.csh
 	touch $(DESTDIR)/var/log/lastlog
 	install -m644 group -D $(DESTDIR)/etc/group
 	sed -e 's/:[0-9]\+:/::/g' group > $(DESTDIR)/etc/gshadow
