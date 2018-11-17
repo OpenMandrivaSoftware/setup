@@ -18,7 +18,7 @@ if ($LC_SOURCED == 1) then
         endif
     endif
     
-    set consoletype=`/sbin/consoletype stdout`
+    set in_console=`tty | grep -vc -e '/dev/tty'`
 
     if ($?CHARSET) then
         switch ($CHARSET)
@@ -30,10 +30,8 @@ if ($LC_SOURCED == 1) then
             case KOI*:
             case LATIN2*:
                 if ( $?TERM ) then
-                    if ( "$TERM" == "linux" ) then
-                        if ( "$consoletype" == "vt" ) then
+                    if ( "$TERM" == "linux" && in_console == 0 ) then
                             /bin/echo -n -e '\033(K' >/dev/tty
-                        endif
                     endif
                 endif
                 breaksw
@@ -49,10 +47,8 @@ if ($LC_SOURCED == 1) then
 	    case koi*:
 	    case latin2-ucw*:
 	        if ( $?TERM ) then
-		    if ( "$TERM" == "linux" ) then
-		        if ( "$consoletype" == "vt" ) then
+		    if ( "$TERM" == "linux" && in_console == 0 ) then
 			    /bin/echo -n -e '\033(K' > /dev/tty
-		        endif
 		    endif
 		endif
 		breaksw
@@ -63,8 +59,7 @@ if ($LC_SOURCED == 1) then
 	    case *.utf8*:
 	    case *.UTF-8*:
 		if ( $?TERM ) then
-		    if ( "$TERM" == "linux" ) then
-			if ( "$consoletype" == "vt" ) then
+		    if ( "$TERM" == "linux" && in_console == 0 ) then
 			    switch ($LANG)
 			    	case en_IN*:
 			    		breaksw
@@ -89,15 +84,13 @@ if ($LC_SOURCED == 1) then
 			          endif
 			        endif
 			      endif
-			    endif
 			endif
 		    endif
 		endif
 		breaksw
 	    case *:
 		if ( $?TERM ) then
-		    if ( "$TERM" == "linux" ) then
-			if ( "$consoletype" == "vt" ) then
+		    if ( "$TERM" == "linux" && in_console == 0 ) then
 			    switch ($LANG)
 			    	case en_IN*:
 			    		breaksw
@@ -117,12 +110,11 @@ if ($LC_SOURCED == 1) then
                                 /bin/unicode_stop
                               endif
                             endif
-			endif
 		    endif
 		endif
 		breaksw
 	endsw
-    endif    
+    endif
     unsetenv SYSFONTACM
     unsetenv SYSFONT
     unset consoletype

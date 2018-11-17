@@ -51,14 +51,13 @@ if [ "$LC_SOURCED" = 1 ]; then
 
     consoletype=$CONSOLETYPE
     if [ -z "$consoletype" ]; then
-      consoletype=$(/sbin/consoletype stdout)
+      consoletype=$(/usr/bin/tty)
     fi
 
     if [ -n "$LANG" ]; then
       case $LANG in
     	*.utf8*|*.UTF-8*)
-    	if [ "$TERM" = "linux" ]; then
-    	    if [ "$consoletype" = "vt" ]; then
+    	if [ "$TERM" = "linux" ] && $consoletype | grep --quiet -e '/dev/tty'; then
     	    	case $LANG in 
     	    		ja*) LANG=en_US.UTF-8 ;;
     	    		ko*) LANG=en_US.UTF-8 ;;
@@ -70,12 +69,10 @@ if [ "$LC_SOURCED" = 1 ]; then
     	    		en_IN*) ;;
     	    		*_IN*) LANG=en_US.UTF-8 ;;
     	    	esac
-            fi
         fi
 	;;
 	*)
-	if [ "$TERM" = "linux" ]; then
-	    if [ "$consoletype" = "vt" ]; then
+	if [ "$TERM" = "linux" ] && $consoletype | grep --quiet -e '/dev/tty'; then
     	    	case $LANG in
     	    		ja*) LANG=en_US ;;
     	    		ko*) LANG=en_US ;;
@@ -87,7 +84,6 @@ if [ "$LC_SOURCED" = 1 ]; then
     	    		en_IN*) ;;
     	    		*_IN*) LANG=en_US ;;
     	    	esac
-	    fi
 	fi
 	;;
       esac
