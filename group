@@ -37,5 +37,6 @@ screen::84:
 users::100:
 input::101:
 lusers::1000:
+nogroup::65533:
 nobody::65534:
-nopasswd::999
+nopasswd::999:
