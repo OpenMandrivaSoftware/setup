@@ -36,6 +36,9 @@ dialout::83:
 screen::84:
 users::100:
 input::101:
+systemd-journal::190:
+systemd-resolve::191:
+systemd-coredump::192:
 lusers::1000:
 nogroup::65533:
 nobody::65534:

@@ -18,10 +18,10 @@ USER="$(id -un)"
 LOGNAME=$USER
 MAIL="/var/spool/mail/$USER"
 HISTCONTROL=ignoredups
-HOSTNAME="$(/bin/hostname 2>/dev/null)"
+HOSTNAME="$(/usr/bin/hostnamectl 2>/dev/null)"
 HISTSIZE=1000
 
-if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ]; then
+if [ -z "$INPUTRC" ] && [ ! -f "$HOME/.inputrc" ]; then
     INPUTRC=/etc/inputrc
 fi
 

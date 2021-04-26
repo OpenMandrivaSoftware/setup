@@ -22,7 +22,7 @@ else
 	umask 002
 endif
 
-setenv HOSTNAME `/bin/hostname`
+setenv HOSTNAME `/usr/bin/hostnamectl --transient`
 set history=1000
 
 if ( -f $HOME/.inputrc ) then

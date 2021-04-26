@@ -1,7 +1,8 @@
 # /etc/services:
+# $Id: services,v 1.49 2017/08/18 12:43:23 ovasik Exp $
 #
 # Network services, Internet style
-# IANA services version: last updated 2015-04-10
+# IANA services version: last updated 2021-01-19
 #
 # Note that it is presently the policy of IANA to assign a single well-known
 # port number for both TCP and UDP; hence, most entries here have two entries
@@ -33,8 +34,6 @@ daytime         13/tcp
 daytime         13/udp
 qotd            17/tcp          quote
 qotd            17/udp          quote
-msp             18/tcp                          # message send protocol (historic)
-msp             18/udp                          # message send protocol (historic)
 chargen         19/tcp          ttytst source
 chargen         19/udp          ttytst source
 ftp-data        20/tcp
@@ -53,6 +52,8 @@ smtp            25/tcp          mail
 smtp            25/udp          mail
 time            37/tcp          timserver
 time            37/udp          timserver
+rap             38/tcp                          # Route Access Protocol
+rap             38/udp                          # Route Access Protocol
 rlp             39/tcp          resource        # resource location
 rlp             39/udp          resource        # resource location
 nameserver      42/tcp          name            # IEN 116
@@ -187,8 +188,8 @@ ldap            389/tcp
 ldap            389/udp
 osb-sd          400/tcp                         # Oracle Secure Backup
 osb-sd          400/udp                         # Oracle Secure Backup
-svrloc          427/tcp                         # Server Location Protocl
-svrloc          427/udp                         # Server Location Protocl
+svrloc          427/tcp                         # Server Location
+svrloc          427/udp                         # Server Location
 mobileip-agent  434/tcp
 mobileip-agent  434/udp
 mobilip-mn      435/tcp
@@ -289,12 +290,20 @@ courier         530/tcp         rpc
 conference      531/tcp         chat
 netnews         532/tcp
 netwall         533/udp                         # -for emergency broadcasts
+nmsp            537/tcp                         # Networked Media Streaming Protocol
+nmsp            537/udp                         # Networked Media Streaming Protocol
 uucp            540/tcp         uucpd           # uucp daemon
 klogin          543/tcp                         # Kerberized `rlogin' (v5)
 kshell          544/tcp         krcmd           # Kerberized `rsh' (v5)
 afpovertcp      548/tcp                         # AFP over TCP
 afpovertcp      548/udp                         # AFP over TCP
 remotefs        556/tcp         rfs_server rfs  # Brunhoff remote filesystem
+meter           570/tcp                         # demon
+meter           570/udp                         # demon
+http-alt        591/tcp                         # FileMaker, Inc. - HTTP Alternate (see Port 80)
+http-alt        591/udp                         # FileMaker, Inc. - HTTP Alternate (see Port 80)
+epp             700/tcp                         # Extensible Provisioning Protocol
+epp             700/udp                         # Extensible Provisioning Protocol
 
 #
 # From ``PORT NUMBERS'':
@@ -329,10 +338,16 @@ ms-sql-s        1433/tcp                        # Microsoft-SQL-Server
 ms-sql-s        1433/udp                        # Microsoft-SQL-Server
 ms-sql-m        1434/tcp                        # Microsoft-SQL-Monitor
 ms-sql-m        1434/udp                        # Microsoft-SQL-Monitor
+csdmbase        1467/tcp                        # CSDMBASE
+csdmbase        1467/udp                        # CSDMBASE
+csdm            1468/tcp                        # CSDM
+csdm            1468/udp                        # CSDM
 ica             1494/tcp                        # Citrix ICA Client
 ica             1494/udp                        # Citrix ICA Client
 wins            1512/tcp                        # Microsoft's Windows Internet Name Service
 wins            1512/udp                        # Microsoft's Windows Internet Name Service
+ricardo-lm      1522/tcp                        # Ricardo North America License Manager
+ricardo-lm      1522/udp                        # Ricardo North America License Manager
 ingreslock      1524/tcp
 ingreslock      1524/udp
 prospero-np     1525/tcp        orasrv          # Prospero non-privileged/oracle
@@ -372,6 +387,7 @@ gdp-port        1997/tcp                        # Cisco Gateway Discovery Protoc
 gdp-port        1997/udp                        # Cisco Gateway Discovery Protocol
 sieve-filter    2000/tcp        cisco-sccp      # Sieve Mail Filter Daemon
 sieve-filter    2000/udp        cisco-sccp      # Sieve Mail Filter Daemon
+raid-cd         2006/udp                        # raid
 nfs             2049/tcp        nfsd shilp      # Network File System
 nfs             2049/udp        nfsd shilp      # Network File System
 nfs             2049/sctp       nfsd shilp      # Network File System
@@ -381,8 +397,13 @@ zephyr-clt      2103/tcp                        # Zephyr serv-hm connection
 zephyr-clt      2103/udp                        # Zephyr serv-hm connection
 zephyr-hm       2104/tcp                        # Zephyr hostmanager
 zephyr-hm       2104/udp                        # Zephyr hostmanager
+nvd             2184/tcp                        # NVD User
+nvd             2184/udp                        # NVD User
+dali            2378/udp                        # DALI lighting control
 cvspserver      2401/tcp                        # CVS client/server operations
 cvspserver      2401/udp                        # CVS client/server operations
+taskmaster2000  2403/tcp                        # TaskMaster 2000 Web
+taskmaster2000  2403/udp                        # TaskMaster 2000 Web
 venus           2430/tcp                        # codacon port
 venus           2430/udp                        # Venus callback/wbc interface
 venus-se        2431/tcp                        # tcp side effects
@@ -391,6 +412,9 @@ codasrv         2432/tcp                        # not used
 codasrv         2432/udp                        # server port
 codasrv-se      2433/tcp                        # tcp side effects
 codasrv-se      2433/udp                        # udp sftp side effectQ
+unicontrol      2437/tcp                        # UniControl
+unicontrol      2437/udp                        # UniControl
+
 
 # Ports numbered 2600 through 2606 are used by the zebra package without
 # being registred.  The primary names are the registered names, and the
@@ -412,25 +436,51 @@ netmon          2606/udp                        # Dell Netmon
 dict            2628/tcp                        # RFC 2229
 dict            2628/udp                        # RFC 2229
 corbaloc        2809/tcp                        # CORBA naming service locator
+nmsigport       2817/tcp                        # NMSig Port
+nmsigport       2817/udp                        # NMSig Port
 icpv2           3130/tcp                        # Internet Cache Protocol V2 (Squid)
 icpv2           3130/udp                        # Internet Cache Protocol V2 (Squid)
+ceph            3300/tcp                        # Ceph monitor
 mysql           3306/tcp                        # MySQL
 mysql           3306/udp                        # MySQL
 trnsprntproxy   3346/tcp                        # Trnsprnt Proxy
 trnsprntproxy   3346/udp                        # Trnsprnt Proxy
 pxe             4011/udp        altserviceboot  # PXE server
+minirem         4120/tcp                        # MiniRem Remote Telemetry and Control
+aws-wsp         4195/tcp                        # AWS protocol for cloud remoting solution
+aws-wsp         4195/udp                        # AWS protocol for cloud remoting solution
+aws-wsp         4195/sctp                       # AWS protocol for cloud remoting solution
+aws-wsp         4195/dccp                       # AWS protocol for cloud remoting solution
 fud             4201/udp                        # Cyrus IMAP FUD Daemon
+opentelemetry   4317/tcp                        # OpenTelemetry Protocol
 rwhois          4321/tcp                        # Remote Who Is
 rwhois          4321/udp                        # Remote Who Is
+getty-focus     4332/tcp                        # Getty Images FOCUS service
 krb524          4444/tcp        nv-video        # Kerberos 5 to 4 ticket xlator
 krb524          4444/udp        nv-video        # Kerberos 5 to 4 ticket xlator
+ntske           4460/tcp                        # Network Time Security Key Establishment
+sixid           4606/tcp                        # Secure ID to IP registration and lookup
+dots-signal     4646/tcp                        # DOTS Signal Channel Protocol.
+dots-signal     4646/udp                        # DOTS Signal Channel Protocol.
+xcap-portal     4888/tcp                        # xcap code analysis portal public user access
+xcap-control    4889/tcp                        # xcap code analysis portal cluster control and administration
+burp            4971/tcp                        # BackUp and Restore Program
 rfe             5002/tcp                        # Radio Free Ethernet
 rfe             5002/udp                        # Actually uses UDP only
 cfengine        5308/tcp                        # CFengine
 cfengine        5308/udp                        # CFengine
+pcp             5351/udp                        # Port Control Protocol
+coap            5683/tcp                        # Constrained Application Protocol (CoAP)
+coaps           5684/tcp                        # Constrained Application Protocol (CoAP)
 cvsup           5999/tcp        CVSup           # CVSup file transfer/John Polstra/FreeBSD
 cvsup           5999/udp        CVSup           # CVSup file transfer/John Polstra/FreeBSD
 x11             6000/tcp        X               # the X Window System
+heliosd         6440/tcp                        # heliosd daemon
+checkmk-agent   6556/tcp                        # Checkmk Monitoring Agent
+ircu            6665-6669/tcp                   # IRCU
+babel-dtls      6699/udp                        # Babel Routing Protocol over DTLS
+split-ping      6924/tcp                        # Ping with RX/TX latency/loss split
+split-ping      6924/udp                        # Ping with RX/TX latency/loss split
 afs3-fileserver 7000/tcp                        # file server itself
 afs3-fileserver 7000/udp                        # file server itself
 afs3-callback   7001/tcp                        # callbacks to cache managers
@@ -451,13 +501,61 @@ afs3-update     7008/tcp                        # server-to-server updater
 afs3-update     7008/udp                        # server-to-server updater
 afs3-rmtsys     7009/tcp                        # remote cache manager service
 afs3-rmtsys     7009/udp                        # remote cache manager service
+loreji-panel    7026/tcp                        # Loreji Webhosting Panel
+iba-cfg         7072/tcp                        # iba Device Configuration Protocol
+iba-cfg-disc    7072/udp                        # iba Device Configuration Protocol
+asa-gateways    7234/tcp                        # Traffic forwarding for Okta cloud infra
+ipluminary      7420/udp                        # Multichannel real-time lighting control
+rome            7663/tcp                        # Proprietary immutable distributed data storage
+rome            7663/udp                        # Proprietary immutable distributed data storage
+p2pevolvenet    8004/tcp                        # Opensource Evolv Enterprise Platform P2P Network Node Connection Prot
+warppipe        8007/tcp                        # I/O oriented cluster computing software
+warppipe        8007/udp                        # I/O oriented cluster computing software
+http-alt        8008/tcp                        # HTTP Alternate
+http-alt        8008/udp                        # HTTP Alternate
+nvme-disc       8009/tcp                        # NVMe over Fabrics Discovery Service
+cfg-cloud       8015/tcp                        # Configuration Cloud Service
+ads-s           8016/tcp                        # Beckhoff Automation Device Specification
+arca-api        8023/tcp                        # ARCATrust vault API
+arca-api        8023/udp                        # ARCATrust vault API
+papachi-p2p-srv 8027/tcp                        # peer tracker and data relay service
+papachi-p2p-srv 8027/udp                        # peer tracker and data relay service
+enguity-xccetp  8041/tcp                        # Xcorpeon ASIC Carrier Ethernet Transport
+enguity-xccetp  8041/udp                        # Xcorpeon ASIC Carrier Ethernet Transport
+websnp          8084/tcp                        # Snarl Network Protocol over HTTP
+skynetflow      8111/udp                        # Skynetflow network services
+aruba-papi      8211/udp                        # Aruba Networks AP management
+espeasy-p2p     8266/udp                        # ESPeasy peer-2-peer communication
+semi-grpc       8710/tcp                        # gRPC for SEMI Standards implementations
+core-of-source  8767/tcp                        # Online mobile multiplayer game
+sandpolis       8768/tcp                        # Sandpolis Server
+oktaauthenticat 8769/tcp                        # Okta MultiPlatform Access Mgmt for Cloud Svcs
+pfcp            8805/udp                        # Destination Port number for PFCP
+hes-clip        8807/udp                        # HES-CLIP Interoperability protocol
+3gpp-monp       8809/udp                        # MCPTT Off-Network Protocol (MONP)
+dpp             8908/tcp                        # WFA Device Provisioning Protocol
+canto-roboflow  8998/tcp                        # Canto RoboFlow Control
+d-star          9011/udp                        # D-Star Routing digital voice+data for amateur radio
+cisco-aqos      9081/udp                        # Required for Adaptive Quality of Service
+hexxorecore     9111/tcp                        # Multiple Purpose, Distributed Message Bus
+hexxorecore     9111/udp                        # Multiple Purpose, Distributed Message Bus
+sapms           9310/tcp                        # SAP Message Server
+gnmi-gnoi       9339/tcp                        # gRPC Network Mgmt/Operations Interface
+p4runtime       9559/tcp                        # P4Runtime gRPC Service
+x510            9877/tcp                        # The X.510 wrapper protocol
+visweather      9979/tcp                        # Valley Information Systems Weather station data
 amanda          10080/tcp                       # amanda backup services
 amanda          10080/udp                       # amanda backup services
+cimple          10125/tcp                       # HotLink CIMple REST API
+cirrossp        10443/tcp                       # CirrosSP Workstation Communication
+xcompute        11235/tcp                       # numerical systems messaging
+xcompute        11235/sctp                      # numerical systems messaging
 pgpkeyserver    11371/tcp       hkp             # PGP/GPG public keyserver
 pgpkeyserver    11371/udp       hkp             # PGP/GPG public keyserver
 asgcypresstcps  11489/tcp                       # ASG Cypress Secure Only
 h323callsigalt  11720/tcp 323callsigalt         # H323 Call Signal Alternate
 h323callsigalt  11720/udp 323callsigalt         # H323 Call Signal Alternate
+tibsd           11971/tcp                       # TiBS Service
 bprd            13720/tcp                       # BPRD (VERITAS NetBackup)
 bprd            13720/udp                       # BPRD (VERITAS NetBackup)
 bpdbm           13721/tcp                       # BPDBM (VERITAS NetBackup)
@@ -470,18 +568,53 @@ bpcd            13782/tcp                       # VERITAS NetBackup
 bpcd            13782/udp                       # VERITAS NetBackup
 vopied          13783/tcp                       # VOPIED Protocol
 vopied          13783/udp                       # VOPIED Protocol
+onep-tls        15002/tcp                       # Open Network Environment TLS
+heythings       18516/udp                       # HeyThings Device communicate service
+faircom-db      19790/tcp                       # FairCom Database
+trinket-agent   21212/tcp                       # Distributed artificial intelligence
+cohesity-agent  21213/tcp                       # Cohesity backup agents
+
+
 
 # This port is registered as wnn6, but also used under the unregistered name
 # "wnn4" by the FreeWnn package.
 wnn6            22273/tcp       wnn4
 wnn6            22273/udp       wnn4
 
+showcockpit-net  22333/tcp                      # ShowCockpit Networking
+showcockpit-net  22333/udp                      # ShowCockpit Networking
+vrmg-ip          24323/tcp                      # Verimag mobile class protocol over TCP
+
+
 quake           26000/tcp
 quake           26000/udp
 wnn6-ds         26208/tcp
 wnn6-ds         26208/udp
+flex-lmadmin    27010/tcp                       # A protocol for managing license services
+mongodb         27017/tcp                       # Mongo database system
+gruber-cashreg  28010/tcp                       # Gruber cash registry protocol
+saltd-licensing  29000/tcp                      # Siemens Licensing Server
+gs-realtime     30400/tcp                       # GroundStar RealTime System
+wg-endpt-comms  33000/tcp                       # WatchGuard Endpoint Communications
+
 traceroute      33434/tcp
 traceroute      33434/udp
+
+mtrace          33435/udp                       # IP Multicast Traceroute
+
+digilent-adept  33890/tcp                       # Adept IP protocol
+3gpp-w1ap       37472/sctp                      # W1 signalling transport
+ng-control      38412/sctp                      # NG Control Plane (3GPP)
+xn-control      38422/sctp                      # Xn Control Plane (3GPP)
+e1-interface    38462/sctp                      # E1 signalling transport (3GPP)
+f1-control      38472/sctp                      # F1 Control Plane (3GPP)
+hmip-routing    43438/udp                       # HmIP LAN Routing
+acronis-backup  44445/tcp                       # Acronis Backup Gateway service port
+juka            48048/tcp                       # Juliar Programming Language Protocol
+inspider        49150/tcp                       # InSpider System
+
+
+
 
 #
 # Datagram Delivery Protocol services
@@ -552,6 +685,7 @@ canna           5680/tcp        auriga-router
 x11-ssh-offset  6010/tcp                        # SSH X11 forwarding offset
 xfs             7100/tcp        font-service    # X font server
 tircproxy       7666/tcp                        # Tircproxy
+# IANA claims 8008 for http-alt
 webcache        8080/tcp        http-alt        # WWW caching service
 webcache        8080/udp        http-alt        # WWW caching service
 tproxy          8081/tcp        sunproxyadmin   # Transparent Proxy
@@ -599,8 +733,6 @@ msg-auth        31/tcp                  # MSG Authentication
 msg-auth        31/udp                  # MSG Authentication
 dsp             33/tcp                  # Display Support Protocol
 dsp             33/udp                  # Display Support Protocol
-rap             38/tcp                  # Route Access Protocol
-rap             38/udp                  # Route Access Protocol
 graphics        41/tcp                  # Graphics
 graphics        41/udp                  # Graphics
 mpm-flags       44/tcp                  # MPM FLAGS Protocol
@@ -641,8 +773,6 @@ vettcp          78/tcp                  # vettcp
 vettcp          78/udp                  # vettcp
 xfer            82/tcp                  # XFER Utility
 xfer            82/udp                  # XFER Utility
-mit-ml-dev      83/tcp                  # MIT ML Device
-mit-ml-dev      83/udp                  # MIT ML Device
 ctf             84/tcp                  # Common Trace Facility
 ctf             84/udp                  # Common Trace Facility
 mfcobol         86/tcp                  # Micro Focus Cobol
@@ -653,8 +783,8 @@ dnsix           90/tcp                  # DNSIX Securit Attribute Token Map
 dnsix           90/udp                  # DNSIX Securit Attribute Token Map
 mit-dov         91/tcp                  # MIT Dover Spooler
 mit-dov         91/udp                  # MIT Dover Spooler
-npp             92/tcp                  # Network Printing Protocol
-npp             92/udp                  # Network Printing Protocol
+#npp             92/tcp                  # Network Printing Protocol
+#npp             92/udp                  # Network Printing Protocol
 dcp             93/tcp                  # Device Control Protocol
 dcp             93/udp                  # Device Control Protocol
 objcall         94/tcp                  # Tivoli Object Dispatcher
@@ -719,8 +849,6 @@ emfis-cntl      141/tcp                 # EMFIS Control Service
 emfis-cntl      141/udp                 # EMFIS Control Service
 bl-idm          142/tcp                 # Britton-Lee IDM
 bl-idm          142/udp                 # Britton-Lee IDM
-uma             144/tcp                 # Universal Management Architecture
-uma             144/udp                 # Universal Management Architecture
 uaac            145/tcp                 # UAAC Protocol
 uaac            145/udp                 # UAAC Protocol
 iso-tp0         146/tcp                 # ISO-IP0
@@ -805,8 +933,6 @@ dn6-nlm-aud     195/tcp                 # DNSIX Network Level Module Audit
 dn6-nlm-aud     195/udp                 # DNSIX Network Level Module Audit
 dn6-smm-red     196/tcp                 # DNSIX Session Mgt Module Audit Redir
 dn6-smm-red     196/udp                 # DNSIX Session Mgt Module Audit Redir
-dls             197/tcp                 # Directory Location Service
-dls             197/udp                 # Directory Location Service
 dls-mon         198/tcp                 # Directory Location Service Monitor
 dls-mon         198/udp                 # Directory Location Service Monitor
 src             200/tcp                 # IBM System Resource Controller
@@ -889,8 +1015,6 @@ rescap          283/tcp                 # rescap
 rescap          283/udp                 # rescap
 corerjd         284/tcp                 # corerjd
 corerjd         284/udp                 # corerjd
-fxp             286/tcp                 # FXP Communication
-fxp             286/udp                 # FXP Communication
 k-block         287/tcp                 # K-BLOCK
 k-block         287/udp                 # K-BLOCK
 novastorbakcup  308/tcp                 # Novastor Backup
@@ -919,8 +1043,6 @@ ptp-event       319/tcp                 # PTP Event
 ptp-event       319/udp                 # PTP Event
 ptp-general     320/tcp                 # PTP General
 ptp-general     320/udp                 # PTP General
-pip             321/tcp                 # PIP
-pip             321/udp                 # PIP
 rtsps           322/tcp                 # RTSPS
 rtsps           322/udp                 # RTSPS
 rpki-rtr        323/tcp                 # Resource PKI to Router
@@ -935,8 +1057,6 @@ zserv           346/tcp                 # Zebra server
 zserv           346/udp                 # Zebra server
 csi-sgwp        348/tcp                 # Cabletron Management Protocol
 csi-sgwp        348/udp                 # Cabletron Management Protocol
-mftp            349/tcp                 # mftp
-mftp            349/udp                 # mftp
 matip-type-a    350/tcp                 # MATIP Type A
 matip-type-a    350/udp                 # MATIP Type A
 matip-type-b    351/tcp bhoetty         # MATIP Type B / bhoetty (added 5/21/97)
@@ -1117,12 +1237,6 @@ sfs-smp-net     451/tcp                 # Cray Network Semaphore server
 sfs-smp-net     451/udp                 # Cray Network Semaphore server
 sfs-config      452/tcp                 # Cray SFS config server
 sfs-config      452/udp                 # Cray SFS config server
-creativeserver  453/tcp                 # CreativeServer
-creativeserver  453/udp                 # CreativeServer
-contentserver   454/tcp                 # ContentServer
-contentserver   454/udp                 # ContentServer
-creativepartnr  455/tcp                 # CreativePartnr
-creativepartnr  455/udp                 # CreativePartnr
 macon-tcp       456/tcp                 # macon-tcp
 macon-udp       456/udp                 # macon-udp
 scohelp         457/tcp                 # scohelp
@@ -1248,8 +1362,6 @@ windream        534/tcp                 # windream Admin
 windream        534/udp                 # windream Admin
 opalis-rdv      536/tcp                 # opalis-rdv
 opalis-rdv      536/udp                 # opalis-rdv
-nmsp            537/tcp                 # Networked Media Streaming Protocol
-nmsp            537/udp                 # Networked Media Streaming Protocol
 apertus-ldp     539/tcp                 # Apertus Technologies Load Determination
 apertus-ldp     539/udp                 # Apertus Technologies Load Determination
 uucp            540/udp                 # uucpd
@@ -1296,8 +1408,6 @@ ms-shuttle      568/tcp                 # microsoft shuttle
 ms-shuttle      568/udp                 # microsoft shuttle
 ms-rome         569/tcp                 # microsoft rome
 ms-rome         569/udp                 # microsoft rome
-meter           570/tcp                 # demon
-meter           570/udp                 # demon
 #meter          571/tcp                 # udemon
 #meter          571/udp                 # udemon
 sonar           572/tcp                 # sonar
@@ -1534,8 +1644,8 @@ olsr            698/tcp                 # OLSR
 olsr            698/udp                 # OLSR
 accessnetwork   699/tcp                 # Access Network
 accessnetwork   699/udp                 # Access Network
-epp             700/tcp                 # Extensible Provisioning Protocol
-epp             700/udp                 # Extensible Provisioning Protocol
+#epp            700/tcp                 # Extensible Provisioning Protocol
+#epp            700/udp                 # Extensible Provisioning Protocol
 lmp             701/tcp                 # Link Management Protocol (LMP)
 lmp             701/udp                 # Link Management Protocol (LMP)
 iris-beep       702/tcp                 # IRIS over BEEP
@@ -1640,6 +1750,8 @@ dhcp-failover2  847/tcp                 # dhcp-failover 2
 dhcp-failover2  847/udp                 # dhcp-failover 2
 gdoi            848/tcp                 # GDOI
 gdoi            848/udp                 # GDOI
+domain-s        853/tcp                 # DNS query-response protocol
+domain-s        853/udp                 # DNS query-response protocol
 iscsi           860/tcp                 # iSCSI
 iscsi           860/udp                 # iSCSI
 owamp-control   861/tcp                 # OWAMP-Control
@@ -2388,8 +2500,8 @@ telesis-licman  1380/tcp                # Telesis Network License Manager
 telesis-licman  1380/udp                # Telesis Network License Manager
 apple-licman    1381/tcp                # Apple Network License Manager
 apple-licman    1381/udp                # Apple Network License Manager
-udt_os          1382/tcp    udt-os      # udt_os
-udt_os          1382/udp    udt-os      # udt_os
+udt_os          1382/tcp                # udt_os
+udt_os          1382/udp                # udt_os
 gwha            1383/tcp                # GW Hannaway Network License Manager
 gwha            1383/udp                # GW Hannaway Network License Manager
 os-licman       1384/tcp                # Objective Solutions License Manager
@@ -2438,8 +2550,7 @@ ibm-res         1405/tcp                # IBM Remote Execution Starter
 ibm-res         1405/udp                # IBM Remote Execution Starter
 netlabs-lm      1406/tcp                # NetLabs License Manager
 netlabs-lm      1406/udp                # NetLabs License Manager
-dbsa-lm         1407/tcp                # DBSA License Manager
-dbsa-lm         1407/udp                # DBSA License Manager
+tibet-server    1407/tcp                # TIBET Data Server
 sophia-lm       1408/tcp                # Sophia License Manager
 sophia-lm       1408/udp                # Sophia License Manager
 here-lm         1409/tcp                # Here License Manager
@@ -2554,10 +2665,6 @@ pipes           1465/tcp                # Pipes Platform
 pipes           1465/udp                # Pipes Platform
 oceansoft-lm    1466/tcp                # Ocean Software License Manager
 oceansoft-lm    1466/udp                # Ocean Software License Manager
-csdmbase        1467/tcp                # CSDMBASE
-csdmbase        1467/udp                # CSDMBASE
-csdm            1468/tcp                # CSDM
-csdm            1468/udp                # CSDM
 aal-lm          1469/tcp                # Active Analysis Limited License Manager
 aal-lm          1469/udp                # Active Analysis Limited License Manager
 uaiact          1470/tcp                # Universal Analytics
@@ -2654,8 +2761,6 @@ atm-zip-office  1520/tcp                # atm zip office
 atm-zip-office  1520/udp                # atm zip office
 ncube-lm        1521/tcp                # nCube License Manager
 ncube-lm        1521/udp                # nCube License Manager
-ricardo-lm      1522/tcp                # Ricardo North America License Manager
-ricardo-lm      1522/udp                # Ricardo North America License Manager
 cichild-lm      1523/tcp                # cichild
 cichild-lm      1523/udp                # cichild
 pdap-np         1526/tcp                # Prospero Data Access Prot non-priv
@@ -3575,7 +3680,6 @@ emce            2004/udp                # CCWS mm conf
 berknet         2005/tcp     csync      # csync for cyrus-imapd
 oracle          2005/udp     csync      # csync for cyrus-imapd
 invokator       2006/tcp                #
-raid-cd         2006/udp                # raid
 dectalk         2007/tcp                #
 raid-am         2007/udp                #
 conf            2008/tcp                #
@@ -3721,7 +3825,7 @@ autodesk-nlm    2080/udp                # Autodesk NLM (FLEXlm)
 kme-trap-port   2081/tcp                # KME PRINTER TRAP PORT
 kme-trap-port   2081/udp                # KME PRINTER TRAP PORT
 infowave        2082/tcp                # Infowave Mobility Server
-infowave        2082/udp                # Infowave Mobiltiy Server
+infowave        2082/udp                # Infowave Mobility Server
 radsec          2083/tcp                # Secure Radius Service
 radsec          2083/udp                # Secure Radius Service
 sunclustergeo   2084/tcp                # SunCluster Geographic
@@ -3915,8 +4019,6 @@ cgn-stat        2182/tcp                # CGN status
 cgn-stat        2182/udp                # CGN status
 cgn-config      2183/tcp                # Code Green configuration
 cgn-config      2183/udp                # Code Green configuration
-nvd             2184/tcp                # NVD User
-nvd             2184/udp                # NVD User
 onbase-dds      2185/tcp                # OnBase Distributed Disk Services
 onbase-dds      2185/udp                # OnBase Distributed Disk Services
 gtaua           2186/tcp                # Guy-Tek Automated Update Applications
@@ -3981,8 +4083,8 @@ netiq-ncap      2219/tcp                # NetIQ NCAP Protocol
 netiq-ncap      2219/udp                # NetIQ NCAP Protocol
 netiq           2220/tcp                # NetIQ End2End
 netiq           2220/udp                # NetIQ End2End
-rockwell-csp1   2221/tcp                # Rockwell CSP1
-rockwell-csp1   2221/udp                # Rockwell CSP1
+ethernet-ip-s   2221/tcp                # EtherNet/IP over TLS
+ethernet-ip-s   2221/udp                # EtherNet/IP over DTLS
 EtherNet/IP-1   2222/tcp  EtherNet-IP-1 # EtherNet/IP I/O
 EtherNet/IP-1   2222/udp  EtherNet-IP-1 # EtherNet/IP I/O
 rockwell-csp2   2223/tcp                # Rockwell CSP2
@@ -4385,8 +4487,6 @@ optilogic       2435/tcp                # OptiLogic
 optilogic       2435/udp                # OptiLogic
 topx            2436/tcp                # TOP/X
 topx            2436/udp                # TOP/X
-unicontrol      2437/tcp                # UniControl
-unicontrol      2437/udp                # UniControl
 sybasedbsynch   2439/tcp                # SybaseDBSynch
 sybasedbsynch   2439/udp                # SybaseDBSynch
 spearway        2440/tcp                # Spearway Lockers
@@ -4771,8 +4871,8 @@ sybaseanywhere  2638/tcp                # Sybase Anywhere
 sybaseanywhere  2638/udp                # Sybase Anywhere
 aminet          2639/tcp                # AMInet
 aminet          2639/udp                # AMInet
-sai_sentlm      2640/tcp  sai-sentlm    # Sabbagh Associates Licence Manager
-sai_sentlm      2640/udp  sai-sentlm    # Sabbagh Associates Licence Manager
+ami-control     2640/tcp                # Alcorn McBride Inc protocol
+ami-control     2640/udp                # Alcorn McBride Inc protocol
 hdl-srv         2641/tcp                # HDL Server
 hdl-srv         2641/udp                # HDL Server
 tragic          2642/tcp                # Tragic
@@ -5118,8 +5218,6 @@ lbc-measure     2815/tcp                # LBC Measurement
 lbc-measure     2815/udp                # LBC Measurement
 lbc-watchdog    2816/tcp                # LBC Watchdog
 lbc-watchdog    2816/udp                # LBC Watchdog
-nmsigport       2817/tcp                # NMSig Port
-nmsigport       2817/udp                # NMSig Port
 rmlnk           2818/tcp                # rmlnk
 rmlnk           2818/udp                # rmlnk
 fc-faultnotify  2819/tcp                # FC Fault Notification
@@ -5474,7 +5572,7 @@ realsecure      2998/tcp                # Real Secure
 realsecure      2998/udp                # Real Secure
 remoteware-un   2999/tcp                # RemoteWare Unassigned
 remoteware-un   2999/udp                # RemoteWare Unassigned
-hbci            3000/tcp                # HBCI
+hbci            3000/tcp   ceph         # HBCI or CEPH monitor
 hbci            3000/udp                # HBCI
 #remoteware-cl  3000/tcp                # RemoteWare Client
 #remoteware-cl  3000/udp                # RemoteWare Client
@@ -6559,10 +6657,10 @@ esimport        3564/udp                # Electromed SIM port
 m2pa            3565/tcp                # M2PA
 m2pa            3565/sctp               # M2PA
 quest-data-hub  3566/tcp                # Quest Data Hub
-enc-eps         3567/tcp                # EMIT protocol stack
-enc-eps         3567/udp                # EMIT protocol stack
-enc-tunnel-sec  3568/tcp                # EMIT secure tunnel
-enc-tunnel-sec  3568/udp                # EMIT secure tunnel
+dof-eps         3567/tcp                # DOF protocol stack
+dof-eps         3567/udp                # DOF protocol stack
+dof-tunnel-sec  3568/tcp                # DOF secure tunnel
+dof-tunnel-sec  3568/udp                # DOF secure tunnel
 mbg-ctrl        3569/tcp                # Meinberg Control Service
 mbg-ctrl        3569/udp                # Meinberg Control Service
 mccwebsvr-port  3570/tcp                # MCC Web Server Port
@@ -7368,8 +7466,8 @@ citysearch      3974/tcp                # Remote Applicant Tracking Service
 citysearch      3974/udp                # Remote Applicant Tracking Service
 airshot         3975/tcp                # Air Shot
 airshot         3975/udp                # Air Shot
-opswagent       3976/tcp                # Opsware Agent
-opswagent       3976/udp                # Opsware Agent
+opswagent       3976/tcp                # Server Automation Agent
+opswagent       3976/udp                # Server Automation Agent
 opswmanager     3977/tcp                # Opsware Manager
 opswmanager     3977/udp                # Opsware Manager
 secure-cfg-svr  3978/tcp                # Secured Configuration Server
@@ -7759,8 +7857,8 @@ macbak          4181/tcp                # MacBak
 macbak          4181/udp                # MacBak
 pcptcpservice   4182/tcp                # Production Company Pro TCP Service
 pcptcpservice   4182/udp                # Production Company Pro TCP Service
-gmmp            4183/tcp                # General Metaverse Messaging Protocol
-gmmp            4183/udp                # General Metaverse Messaging Protocol
+cyborgnet       4183/tcp                # CyborgNet communications
+cyborgnet       4183/udp                # CyborgNet communications
 universe_suite  4184/tcp   universe-suite  # UNIVERSE SUITE MESSAGE SERVICE
 universe_suite  4184/udp   universe-suite  # UNIVERSE SUITE MESSAGE SERVICE
 wcpp            4185/tcp                # Woven Control Plane Protocol
@@ -7810,8 +7908,6 @@ trim-event      4322/tcp                # TRIM Event Service
 trim-event      4322/udp                # TRIM Event Service
 trim-ice        4323/tcp                # TRIM ICE Service
 trim-ice        4323/udp                # TRIM ICE Service
-balour          4324/tcp                # Balour Game Server
-balour          4324/udp                # Balour Game Server
 geognosisman    4325/tcp                # Cadcorp GeognoSIS Manager Service
 geognosisman    4325/udp                # Cadcorp GeognoSIS Manager Service
 geognosis       4326/tcp                # Cadcorp GeognoSIS Service
@@ -7826,6 +7922,9 @@ ktickets-rest   4331/tcp                # ktickets REST API for event management
 ahsp            4333/tcp                # ArrowHead Service Protocol
 ahsp            4333/udp                # ArrowHead Service Protocol
 ahsp            4333/sctp               # ArrowHead Service Protocol
+netconf-ch-ssh  4334/tcp                # NETCONF Call Home (SSH)
+netconf-ch-tls  4335/tcp                # NETCONF Call Home (TLS)
+restconf-ch-tls 4336/tcp                # RESTCONF Call Home (TLS)
 gaia            4340/tcp                # Gaia Connector Protocol
 gaia            4340/udp                # Gaia Connector Protocol
 lisp-data       4341/tcp                # LISP Data Packets
@@ -7924,6 +8023,21 @@ slscc           4408/tcp                # SLS Technology Control Centre
 netcabinet-com  4409/tcp                # Net-Cabinet comunication
 itwo-server     4410/tcp                # RIB iTWO Application Server
 found           4411/tcp                # Found Messaging Protocol
+smallchat       4412/udp                # SmallChat
+avi-nms         4413/tcp                # AVI Systems NMS
+avi-nms-disc    4413/udp                # AVI Systems NMS
+updog           4414/tcp                # Updog Monitoring and Status
+brcd-vr-req     4415/tcp                # Brocade Virtual Router
+pjj-player      4416/tcp                # PJJ Media Player
+pjj-player-disc 4416/udp                # PJJ Media Player discovery
+workflowdir     4417/tcp                # Workflow Director
+axysbridge      4418/udp                # AXYS communication protocol
+cbp             4419/tcp                # Colnod Binary Protocol
+nvm-express     4420/tcp                # NVM Express over Fabrics
+nvm-express     4420/udp                # NVM Express over Fabrics
+scaleft         4421/tcp                # Management for Cloud
+tsepisp         4422/tcp                # TSEP Installation Service
+thingkit        4423/tcp                # thingkit secure mesh
 netrockey6      4425/tcp                # NetROCKEY6 SMART Plus Service
 netrockey6      4425/udp                # NetROCKEY6 SMART Plus Service
 beacon-port-2   4426/tcp                # SMARTS Beacon Port
@@ -8027,6 +8141,7 @@ bmc-reporting   4568/udp                # BMC Reporting
 iax             4569/tcp                # Inter-Asterisk eXchange
 iax             4569/udp                # Inter-Asterisk eXchange
 deploymentmap   4570/tcp                # site deployment information for Oracle Communications Suite
+cardifftec-back 4573/tcp                # CardiffTec server/client communication
 rid             4590/tcp                # RID over HTTP/TLS
 l3t-at-an       4591/tcp                # HRPD L3T (AT-AN)
 l3t-at-an       4591/udp                # HRPD L3T (AT-AN)
@@ -8053,6 +8168,7 @@ mtsserver       4602/tcp                # EAX MTS Server
 menandmice-upg  4603/tcp                # Men & Mice Upgrade Agent
 irp             4604/tcp                # Identity Registration Protocol
 sixchat         4605/tcp                # Direct End to End Secure
+ventoso         4621/udp                # remote radio VOIP
 playsta2-app    4658/tcp                # PlayStation2 App Port
 playsta2-app    4658/udp                # PlayStation2 App Port
 playsta2-lob    4659/tcp                # PlayStation2 Lobby Port
@@ -8184,7 +8300,7 @@ smart-install   4786/tcp                # Smart Install Service
 sia-ctrl-plane  4787/tcp                # Service Insertion Architecture (SIA) Control-Plane
 xmcp            4788/tcp                # eXtensible Messaging Client Protocol
 vxlan           4789/udp                # Virtual eXtensible Local area network
-vxlan-gpe       4790/udp                # Generic Protocol Extension for vxlan 
+vxlan-gpe       4790/udp                # Generic Protocol Extension for vxlan
 roce            4791/udp                # IP Routable RocE
 iims            4800/tcp                # Icona Instant Messenging System
 iims            4800/udp                # Icona Instant Messenging System
@@ -8286,6 +8402,7 @@ ccss-qmm        4969/tcp                # CCSS QMessageMonitor
 ccss-qmm        4969/udp                # CCSS QMessageMonitor
 ccss-qsm        4970/tcp                # CCSS QSystemMonitor
 ccss-qsm        4970/udp                # CCSS QSystemMonitor
+ctxs-vpp        4980/udp                # Citrix Virtual Path
 webyast         4984/tcp                # WebYast
 gerhcs          4985/tcp                # GER HC Standard
 mrip            4986/tcp                # Model Railway Interface Program
@@ -8355,6 +8472,8 @@ surfpass        5030/tcp                # SurfPass
 surfpass        5030/udp                # SurfPass
 dmp             5031/udp                # Direct Message Protocol
 signacert-agent 5032/tcp                # SignaCert Enterprise Trust Server Agent
+jtnetd-server   5033/tcp                # Janstor Secure Data
+jtnetd-status   5034/tcp                # Janstor Status
 asnaacceler8db  5042/tcp                # asnaacceler8db
 asnaacceler8db  5042/udp                # asnaacceler8db
 swxadmin        5043/tcp                # ShopWorX Administration
@@ -8451,6 +8570,7 @@ actifio-c2c     5103/tcp                # Actifio C2C
 tinymessage     5104/udp                # TinyMessage
 hughes-ap       5105/udp                # Hughes Association Protocol
 actifioudsagent 5106/tcp                # Actifio UDS Agent
+actifioreplic   5107/tcp                # Disk to Disk replication
 taep-as-svc     5111/tcp                # TAEP AS service
 taep-as-svc     5111/udp                # TAEP AS service
 pm-cmdsvr       5112/tcp                # PeerMe Msg Cmd Service
@@ -8561,6 +8681,7 @@ caevms          5251/udp                # CA eTrust VM Service
 movaz-ssc       5252/tcp                # Movaz SSC
 movaz-ssc       5252/udp                # Movaz SSC
 kpdp            5253/tcp                # Kohler Power Device Protocol
+logcabin        5254/tcp                # LogCabin storage service
 3com-njack-1    5264/tcp                # 3Com Network Jack Port 1
 3com-njack-1    5264/udp                # 3Com Network Jack Port 1
 3com-njack-2    5265/tcp                # 3Com Network Jack Port 2
@@ -8723,7 +8844,9 @@ pmip6-data      5437/udp                # pmip6-data
 spss            5443/tcp                # Pearson HTTPS
 spss            5443/udp                # Pearson HTTPS
 smbdirect       5445/tcp                # Server Message Block over Remote Direct Memory Access
-smbdirect       5445/sctp                # Server Message Block over Remote Direct Memory Access
+smbdirect       5445/sctp               # Server Message Block over Remote Direct Memory Access
+tiepie          5450/tcp                # TiePie engineering data
+tiepie-disc     5450/udp                # TiePie engineering data (discovery)
 surebox         5453/tcp                # SureBox
 surebox         5453/udp                # SureBox
 apc-5454        5454/tcp                # APC 5454
@@ -8762,6 +8885,7 @@ checkoutdb      5505/tcp                # Checkout Database
 checkoutdb      5505/udp                # Checkout Database
 amc             5506/tcp                # Amcom Mobile Connect
 amc             5506/udp                # Amcom Mobile Connect
+psl-management  5507/tcp                # PowerSysLab Electrical
 sgi-eventmond   5553/tcp                # SGI Eventmond Port
 sgi-eventmond   5553/udp                # SGI Eventmond Port
 sgi-esphttp     5554/tcp                # SGI ESP HTTP
@@ -8771,9 +8895,10 @@ personal-agent  5555/udp                # Personal Agent
 freeciv         5556/tcp                # Freeciv gameplay
 freeciv         5556/udp                # Freeciv gameplay
 farenet         5557/tcp                # Sandlab FARENET
+hpe-dp-bura     5565/tcp                # HPE Advanced BURA
 westec-connect  5566/tcp                # Westec Connect
-enc-eps-mc-sec  5567/tcp                # EMIT protocol stack
-enc-eps-mc-sec  5567/udp                # EMIT protocol stack
+dof-dps-mc-sec  5567/tcp                # DOF protocol stack
+dof-dps-mc-sec  5567/udp                # DOF protocol stack
 sdt             5568/tcp                # Session Data Transport Multicast
 sdt             5568/udp                # Session Data Transport Multicast
 rdmnet-ctrl     5569/tcp                # Management (RDM) controller status notifications
@@ -8814,7 +8939,7 @@ a3-sdunode      5604/tcp                # A3-SDUNode
 a3-sdunode      5604/udp                # A3-SDUNode
 a4-sdunode      5605/tcp                # A4-SDUNode
 a4-sdunode      5605/udp                # A4-SDUNode
-efr             5618/tcp                # Fiscal Registering Protocol 
+efr             5618/tcp                # Fiscal Registering Protocol
 ninaf           5627/tcp                # Node Initiated Network Association Forma
 ninaf           5627/udp                # Node Initiated Network Association Forma
 htrust          5628/tcp                # HTrust API
@@ -8837,7 +8962,7 @@ cssc            5637/tcp                # Symantec CSSC
 flcrs           5638/tcp                # Symantec Fingerprint Lookup and Container Reference
 ics             5639/tcp                # Symantec Integrity Checking
 vfmobile        5646/tcp                # Ventureforth Mobile
-###UNAUTHORIZED USE: Port 5666 used by SAIC NRPE############
+nrpe            5666/tcp                # Nagios Remote Plugin Executor
 filemq          5670/tcp                # ZeroMQ file
 zre-disc        5670/udp                # Local area discovery and msging over ZeroMQ
 amqps           5671/tcp                # amqp protocol over TLS/SSL
@@ -8873,6 +8998,7 @@ qmvideo         5689/tcp                # QM video network management protocol
 qmvideo         5689/udp                # QM video network management protocol
 rbsystem        5693/tcp                # Robert Bosch Data Transfer
 kmip            5696/tcp                # Key Management Interoperability Protocol
+supportassist   5700/tcp                # Dell SupportAssist data
 proshareaudio   5713/tcp                # proshare conf audio
 proshareaudio   5713/udp                # proshare conf audio
 prosharevideo   5714/tcp                # proshare conf video
@@ -9008,6 +9134,7 @@ nuxsl           5991/tcp                # NUXSL
 nuxsl           5991/udp                # NUXSL
 consul-insight  5992/tcp                # Consul InSight Security
 consul-insight  5992/udp                # Consul InSight Security
+cim-rs          5993/tcp                # DMTF WBEM CIM REST
 ndl-ahp-svc     6064/tcp                # NDL-AHP-SVC
 ndl-ahp-svc     6064/udp                # NDL-AHP-SVC
 winpharaoh      6065/tcp                # WinPharaoh
@@ -9177,6 +9304,7 @@ metaedit-mu     6360/udp                # MetaEdit+ Multi-User
 ndn             6363/udp                # Named Data Networking
 metaedit-se     6370/tcp                # MetaEdit+ Server Administration
 metaedit-se     6370/udp                # MetaEdit+ Server Administration
+redis           6379/tcp                # An advanced key-value cache and store
 metatude-mds    6382/tcp                # Metatude Dialogue Server
 metatude-mds    6382/udp                # Metatude Dialogue Server
 clariion-evr01  6389/tcp                # clariion-evr01
@@ -9209,6 +9337,7 @@ faxcomservice   6417/tcp                # Faxcom Message Service
 faxcomservice   6417/udp                # Faxcom Message Service
 syserverremote  6418/tcp                # SYserver remote commands
 svdrp           6419/tcp                # Simple VDR Protocol
+svdrp-disc      6419/udp                # Simple VDR Protocol Discovery
 nim-vdrshell    6420/tcp                # NIM_VDRShell
 nim-vdrshell    6420/udp                # NIM_VDRShell
 nim-wan         6421/tcp                # NIM_WAN
@@ -9380,7 +9509,7 @@ ibprotocol      6714/tcp                # Internet Backplane Protocol
 ibprotocol      6714/udp                # Internet Backplane Protocol
 fibotrader-com  6715/tcp                # Fibotrader Communications
 fibotrader-com  6715/udp                # Fibotrader Communications
-printercare-cc  6716/tcp                # PrinterCare cloud service
+princity-agent  6716/tcp                # Princity Agent
 bmc-perf-agent  6767/tcp                # BMC PERFORM AGENT
 bmc-perf-agent  6767/udp                # BMC PERFORM AGENT
 bmc-perf-mgrd   6768/tcp                # BMC PERFORM MGRD
@@ -9492,6 +9621,7 @@ iwg1            7071/udp                # IWGADTS Aircraft Housekeeping Message
 martalk         7073/tcp                # MarTalk protocol
 empowerid       7080/tcp                # EmpowerID Communication
 empowerid       7080/udp                # EmpowerID Communication
+zixi-transport  7088/udp                # Zixi live video transport
 jdp-disc        7095/udp                # Java Discovery Protocol
 lazy-ptop       7099/tcp                # lazy-ptop
 lazy-ptop       7099/udp                # lazy-ptop
@@ -9499,6 +9629,7 @@ font-service    7100/udp                # X Font Service
 elcn            7101/tcp                # Embedded Light Control Network
 elcn            7101/udp                # Embedded Light Control Network
 aes-x170        7107/udp                # AES-X170
+rothaga         7117/tcp                # Encrypted chat and file transfer service
 virprot-lm      7121/tcp                # Virtual Prototypes License Manager
 virprot-lm      7121/udp                # Virtual Prototypes License Manager
 scenidm         7128/tcp                # intelligent data manager
@@ -9534,6 +9665,8 @@ fodms           7200/tcp                # FODMS FLIP
 fodms           7200/udp                # FODMS FLIP
 dlip            7201/tcp                # DLIP
 dlip            7201/udp                # DLIP
+PS-Server       7215/tcp                # PaperStream Server services
+PS-Capture-Pro  7216/tcp                # PaperStream Capture Professional
 ramp            7227/tcp                # Registry A & M Protocol
 ramp            7227/udp                # Registry A $ M Protocol
 citrixupp       7228/tcp                # Citrix Universal Printing Port
@@ -9541,6 +9674,8 @@ citrixuppg      7229/tcp                # Citrix UPP Gateway
 aspcoordination 7235/udp                # ASP Coordination Protocol
 display         7236/tcp                # Wi-Fi Alliance Wi-Fi Display Protocol
 pads            7237/tcp                # PADS (Public Area Display System) Server
+frc-hicp        7244/tcp                # FrontRow Calypso Human Interface Control Protocol
+frc-hicp-disc   7244/udp                # FrontRow Calypso Human Interface Control Protocol
 cnap            7262/tcp                # Calypso Network Access Protocol
 cnap            7262/udp                # Calypso Network Access Protocol
 watchme-7272    7272/tcp                # WatchMe Monitoring 7272
@@ -9651,9 +9786,10 @@ dell-eql-asm    7569/tcp                # Dell EqualLogic Host Group Management
 aries-kfinder   7570/tcp                # Aries Kfinder
 aries-kfinder   7570/udp                # Aries Kfinder
 coherence       7574/tcp                # Oracle Coherence Cluster Service
-oherence-disc   7574/udp                # Oracle Coherence Cluster discovery service
 sun-lm          7588/tcp                # Sun License Manager
 sun-lm          7588/udp                # Sun License Manager
+mipi-debug      7606/tcp                # MIPI Alliance Debug
+mipi-debug      7606/udp                # MIPI Alliance Debug
 indi            7624/tcp                # Instrument Neutral Distributed Interface
 indi            7624/udp                # Instrument Neutral Distributed Interface
 simco           7626/tcp                # SImple Middlebox COnfiguration (SIMCO) Server
@@ -9702,6 +9838,9 @@ freezexservice  7726/tcp                # FreezeX Console Service
 freezexservice  7726/udp                # FreezeX Console Service
 trident-data    7727/tcp                # Trident Systems Data
 trident-data    7727/udp                # Trident Systems Data
+osvr            7728/tcp                # Open-Source Virtual Reality
+osvr            7728/udp                # Open-Source Virtual Reality
+osvr            7728/sctp               # Open-Source Virtual Reality
 smip            7734/tcp                # Smith Protocol over IP
 smip            7734/udp                # Smith Protocol over IP
 aiagent         7738/tcp                # HP Enterprise Discovery Agent
@@ -9715,6 +9854,7 @@ raqmon-pdu      7744/tcp                # RAQMON PDU
 raqmon-pdu      7744/udp                # RAQMON PDU
 prgp            7747/tcp                # Put/Run/Get Protocol
 prgp            7747/udp                # Put/Run/Get Protocol
+inetfs          7775/tcp                # File System using TLS over WAN
 cbt             7777/tcp                # cbt
 cbt             7777/udp                # cbt
 interwise       7778/tcp                # Interwise
@@ -9840,6 +9980,7 @@ senomix08       8059/tcp                # Senomix Timesheets Client [1 year assi
 senomix08       8059/udp                # Senomix Timesheets Client [1 year assignment]
 aero            8060/udp                # Asymmetric Extended Route Optimization (AERO)
 toad-bi-appsrvr 8066/tcp                # Toad BI Application Server
+infi-async      8067/tcp                # Infinidat async replication
 gadugadu        8074/tcp                # Gadu-Gadu
 gadugadu        8074/udp                # Gadu-Gadu
 us-cli          8082/tcp                # Utilistor (Client)
@@ -9896,6 +10037,7 @@ vmware-fdm      8182/udp                # VMware Fault Domain Manager
 proremote       8183/tcp                # ProRemote
 itach           8184/tcp                # Remote iTach Connection
 itach           8184/udp                # Remote iTach Connection
+gcp-rphy        8190/tcp                # Generic control plane for RPHY
 limnerpressure  8191/tcp                # Limner Pressure
 spytechphone    8192/tcp                # SpyTech Phone Service
 spytechphone    8192/udp                # SpyTech Phone Service
@@ -9922,12 +10064,16 @@ lm-webwatcher   8208/tcp                # LM Webwatcher
 lm-webwatcher   8208/udp                # LM Webwatcher
 rexecj          8230/tcp                # RexecJ Server
 rexecj          8230/udp                # RexecJ Server
+hncp-udp-port   8231/udp                # HNCP
+hncp-dtls-port  8232/udp                # HNCP over DTLS
 synapse-nhttps  8243/tcp                # Synapse Non Blocking HTTPS
 synapse-nhttps  8243/udp                # Synapse Non Blocking HTTPS
 pando-sec       8276/tcp                # Pando Media Controlled Distribution
 pando-sec       8276/udp                # Pando Media Controlled Distribution
 synapse-nhttp   8280/tcp                # Synapse Non Blocking HTTP
 synapse-nhttp   8280/udp                # Synapse Non Blocking HTTP
+libelle         8282/tcp                # Libelle EnterpriseBus
+libelle-disc    8282/udp                # Libelle EnterpriseBus Discovery
 blp3            8292/tcp                # Bloomberg professional
 blp3            8292/udp                # Bloomberg professional
 blp4            8294/tcp                # Bloomberg intelligent client
@@ -9942,6 +10088,8 @@ tnp-discover    8320/tcp                # Thin(ium) Network Protocol
 tnp-discover    8320/udp                # Thin(ium) Network Protocol
 tnp             8321/tcp                # Thin(ium) Network Protocol
 tnp             8321/udp                # Thin(ium) Network Protocol
+garmin-marine   8322/tcp                # Garmin Marine
+garmin-marine   8322/udp                # Garmin Marine
 server-find     8351/tcp                # Server Find
 server-find     8351/udp                # Server Find
 cruise-enum     8376/tcp                # Cruise ENUM
@@ -9956,6 +10104,7 @@ cruise-update   8380/tcp                # Cruise UPDATE
 cruise-update   8380/udp                # Cruise UPDATE
 m2mservices     8383/tcp                # M2m Services
 m2mservices     8383/udp                # M2m Services
+marathontp      8384/udp                # Marathon Transport Protocol
 cvd             8400/tcp                # cvd
 cvd             8400/udp                # cvd
 sabarsd         8401/tcp                # sabarsd
@@ -9996,12 +10145,13 @@ fmtp            8500/udp                # Flight Message Transfer Protocol
 cmtp-mgt        8501/tcp                # CYTEL Message Transfer Management
 cmtp-av         8501/udp                # CYTEL Message Transfer Audio and Video
 ftnmtp          8502/tcp                # FTN Message Transfer
+lsp-self-ping   8503/udp                # MPLS LSP Self-Ping
 rtsp-alt        8554/tcp                # RTSP Alternate (see port 554)
 rtsp-alt        8554/udp                # RTSP Alternate (see port 554)
 d-fence         8555/tcp                # SYMAX D-FENCE
 d-fence         8555/udp                # SYMAX D-FENCE
-enc-tunnel      8567/tcp                # EMIT tunneling protocol
-enc-tunnel      8567/udp                # EMIT tunneling protocol
+dof-tunnel      8567/tcp                # DOF tunneling protocol
+dof-tunnel      8567/udp                # DOF tunneling protocol
 asterix         8600/tcp                # Surveillance Data
 asterix         8600/udp                # Surveillance Data
 canon-cpp-disc  8609/udp                # Canon Compact Printer Protocol Discovery
@@ -10267,6 +10417,7 @@ mpidcmgr        9343/tcp                # MpIdcMgr
 mpidcmgr        9343/udp                # MpIdcMgr
 mphlpdmc        9344/tcp                # Mphlpdmc
 mphlpdmc        9344/udp                # Mphlpdmc
+rancher         9345/tcp                # Rancher Agent
 ctechlicensing  9346/tcp                # C Tech Licensing
 ctechlicensing  9346/udp                # C Tech Licensing
 fjdmimgr        9374/tcp                # fjdmimgr
@@ -10490,6 +10641,7 @@ rsms            10201/tcp               # Remote Server Management Service
 rscs            10201/udp               # Remote Server Control and Test Service
 apollo-relay    10252/tcp               # Apollo Relay Port
 apollo-relay    10252/udp               # Apollo Relay Port
+eapol-relay     10253/udp               # Relay of EAPOL frames
 axis-wimp-port  10260/tcp               # Axis WIMP Port
 axis-wimp-port  10260/udp               # Axis WIMP Port
 blocks          10288/tcp               # Blocks
@@ -10507,6 +10659,7 @@ MOS-soap        10543/tcp               # MOS SOAP Default Port
 MOS-soap        10543/udp               # MOS SOAP Default Port
 MOS-soap-opt    10544/tcp               # MOS SOAP Optional Port
 MOS-soap-opt    10544/udp               # MOS SOAP Optional Port
+serverdocs      10548/tcp               # Apple Document Sharing
 printopia       10631/tcp               # administration and control of "Printopia"
 gap             10800/tcp               # Gestor de Acaparamiento para Pocket PCs
 gap             10800/udp               # Gestor de Acaparamiento para Pocket PCs
@@ -10680,6 +10833,7 @@ vcs-app         14141/tcp               # VCS Application
 vcs-app         14141/udp               # VCS Application
 icpp            14142/tcp               # IceWall Cert Protocol
 icpp            14142/udp               # IceWall Cert Protocol
+icpps           14143/tcp               # IceWall Cert Protocol over TLS
 gcm-app         14145/tcp               # GCM Application
 gcm-app         14145/udp               # GCM Application
 vrts-tdd        14149/tcp               # Veritas Traffic Director
@@ -10736,9 +10890,11 @@ netserialext4   16368/tcp               # Network Serial Extension Ports Four
 netserialext4   16368/udp               # Network Serial Extension Ports Four
 connected       16384/tcp               # Connected Corp
 connected       16384/udp               # Connected Corp
+rdgs            16385/tcp               # Reliable Datagram Sockets
 xoms            16619/tcp               # X509 Objects Management Service
 axon-tunnel     16665/tcp               # Reliable multipath data transport for high latencies
 vtp             16666/udp               # Vidder Tunnel Protocol
+cadsisvr        16789/tcp               # mainframe External Security Managers
 newbay-snc-mc   16900/tcp               # Newbay Mobile Client Update Service
 newbay-snc-mc   16900/udp               # Newbay Mobile Client Update Service
 sgcip           16950/tcp               # Simple Generic Client Interface Protocol
@@ -10765,6 +10921,10 @@ avtp            17220/udp               # IEEE 1722 Transport Protocol for Time 
 avdecc          17221/tcp               # IEEE 1722.1 AVB Discovery, Enumeration, Connection management, and Control
 avdecc          17221/udp               # IEEE 1722.1 AVB Discovery, Enumeration, Connection management, and Control
 cpsp            17222/udp               # Control Plane Synchronization Protocol
+isa100-gci      17223/tcp               # ISA100 Wireless gateway to client
+trdp-pd         17224/udp               # Train Realtime Data Protocol
+trdp-md         17225/tcp               # Train Realtime Data Protocol
+trdp-md         17225/udp               # Train Realtime Data Protocol
 integrius-stp   17234/tcp               # Integrius Secure Tunnel Protocol
 integrius-stp   17234/udp               # Integrius Secure Tunnel Protocol
 ssh-mgmt        17235/tcp               # SSH Tectia Manager
@@ -10871,6 +11031,7 @@ mountd          20048/udp               # NFS mount protocol
 nfsrdma         20049/tcp               # Network File System (NFS) over RDMA
 nfsrdma         20049/udp               # Network File System (NFS) over RDMA
 nfsrdma         20049/sctp              # Network File System (NFS) over RDMA
+avesterra       20057/tcp               # AvesTerra Hypergraph Transfer Protocol (HGTP)
 tolfab          20167/tcp               # TOLfab Data Change
 tolfab          20167/udp               # TOLfab Data Change
 ipdtp-port      20202/tcp               # IPD Tunneling Port
@@ -10951,6 +11112,8 @@ inovaport6      23005/tcp               # Inova LightLink Server Type 6
 inovaport6      23005/udp               # Inova LightLink Server Type 6
 gntp            23053/tcp               # Generic Notification Transport Protocol
 s102            23272/udp               # S102 application
+5afe-dir        23294/tcp               # 5AFE SDN Directory
+5afe-disc       23294/udp               # 5AFE SDN Directory discovery
 elxmgmt         23333/tcp               # Emulex HBAnyware Remote Management
 elxmgmt         23333/udp               # Emulex HBAnyware Remote Management
 novar-dbase     23400/tcp               # Novar Data
@@ -11036,6 +11199,7 @@ bf-game         25954/udp               # Bitfighter game server
 bf-master       25955/udp               # Bitfighter master server
 scscp           26133/tcp               # Symbolic Computation Software Composability Protocol
 scscp           26133/udp               # Symbolic Computation Software Composability Protocol
+cockroach       26257/tcp               # CockroachDB
 ezproxy         26260/tcp               # eZproxy
 ezproxy         26260/udp               # eZproxy
 ezmeeting       26261/tcp               # eZmeeting
@@ -11069,6 +11233,7 @@ voxelstorm      28200/tcp               # VoxelStorm game server
 voxelstorm      28200/udp               # VoxelStorm game server
 siemensgsm      28240/tcp               # Siemens GSM
 siemensgsm      28240/udp               # Siemens GSM
+bosswave        28589/tcp               # Building operating system services wide area verified exchange
 sgsap           29118/sctp              # SGsAP in 3GPP
 otmp            29167/tcp               # ObTools Message Protocol
 otmp            29167/udp               # ObTools Message Protocol
@@ -11083,6 +11248,8 @@ pago-services2  30002/udp               # Pago Services 2
 amicon-fpsu-ra  30003/tcp               # Amicon FPSU-IP Remote Administration
 amicon-fpsu-ra  30003/udp               # Amicon FPSU-IP Remote Administration
 amicon-fpsu-s   30004/udp               # Amicon FPSU-IP VPN
+rwp             30100/tcp               # Remote Window Protocol
+rwp             30100/sctp              # Remote Window Protocol
 kingdomsonline  30260/tcp               # Kingdoms Online (CraigAvenue)
 kingdomsonline  30260/udp               # Kingdoms Online (CraigAvenue)
 samsung-disc    30832/udp               # Samsung Convergence Discovery Protocol
@@ -11108,6 +11275,7 @@ iracinghelper   32034/tcp               # iRacing helper service
 iracinghelper   32034/udp               # iRacing helper service
 t1distproc60    32249/tcp               # T1 Distributed Processor
 t1distproc60    32249/udp               # T1 Distributed Processor
+plex            32400/tcp               # Plex multimedia
 apm-link        32483/tcp               # Access Point Manager Link
 apm-link        32483/udp               # Access Point Manager Link
 sec-ntb-clnt    32635/tcp               # SecureNotebook-CLNT
@@ -11141,6 +11309,7 @@ mlsn            32801/udp               # Multiple Listing Service Network
 retp            32811/tcp               # Real Estate Transport Protocol
 idmgratm        32896/tcp               # Attachmate ID Manager
 idmgratm        32896/udp               # Attachmate ID Manager
+mysqlx          33060/tcp               # MySQL Database Extended Interface
 aurora-balaena  33123/tcp               # Aurora (Balaena Ltd)
 aurora-balaena  33123/udp               # Aurora (Balaena Ltd)
 diamondport     33331/tcp               # DiamondCentral Interface
@@ -11184,8 +11353,11 @@ allpeers        36001/udp               # AllPeers Network
 wlcp            36411/udp               # Wireless LAN Control plane Protocol (WLCP)
 s1-control      36412/sctp              # S1-Control Plane (3GPP)
 x2-control      36422/sctp              # X2-Control Plane (3GPP)
+slmap           36423/sctp              # SLm Interface Application protocol
+nq-ap           36424/sctp              # Nq and Nq' Application protocol
 m2ap            36443/sctp              # M2 Application Part
 m3ap            36444/sctp              # M3 Application Part
+xw-control      36462/sctp              # Xw-Control Plane (3GPP)
 febooti-aw      36524/tcp               # Febooti Automation Workshop
 observium-agent 36602/tcp               # Observium statistics collection agent
 kastenxpipe     36865/tcp               # KastenX Pipe
@@ -11213,6 +11385,9 @@ turbonote-1     39681/tcp               # TurboNote Default Port
 turbonote-1     39681/udp               # TurboNote Default Port
 safetynetp      40000/tcp               # SafetyNET p
 safetynetp      40000/udp               # SafetyNET p
+k-patentssensor 40023/udp               # K-PatentsSensorInformation
+z-wave-s        41230/tcp               # Z-Wave Protocol over SSL/TLS
+z-wave-s        41230/udp               # Z-Wave Protocol over DTLS
 sptx            40404/tcp               # Simplify Printing TX
 cscp            40841/tcp               # CSCP
 cscp            40841/udp               # CSCP
@@ -11253,7 +11428,7 @@ ew-mgmt         43440/tcp               # Cisco EnergyWise Management
 ew-disc-cmd     43440/udp               # Cisco EnergyWise Discovery and Command Flooding
 ciscocsdb       43441/tcp               # Cisco NetMgmt DB Ports
 ciscocsdb       43441/udp               # Cisco NetMgmt DB Ports
-z-wave-s        44123/tcp               # Z-Wave Secure Tunnel
+z-wave-tunnel   44123/tcp               # Z-Wave Secure Tunnel
 pmcd            44321/tcp               # PCP server (pmcd)
 pmcd            44321/udp               # PCP server (pmcd)
 pmcdproxy       44322/tcp               # PCP server (pmcd) proxy
@@ -11282,7 +11457,7 @@ qdb2service     45825/tcp               # Qpuncture Data Access Service
 qdb2service     45825/udp               # Qpuncture Data Access Service
 ssr-servermgr   45966/tcp               # SSRServerMgr
 ssr-servermgr   45966/udp               # SSRServerMgr
-sp-remotetablet 46998/tcp               # connection between computer and a signature tablet
+inedo           46336/tcp               # Listen port used for Inedo agent
 mediabox        46999/tcp               # MediaBox Server
 mediabox        46999/udp               # MediaBox Server
 mbus            47000/tcp               # Message Bus
@@ -11321,3 +11496,112 @@ iqobject        48619/udp               # iqobject
 robotraconteur  48653/tcp               # Robot Raconteur transport
 robotraconteur  48653/udp               # Robot Raconteur transport
 matahari        49000/tcp               # Matahari Broker
+nusrp           49001/tcp               # Nuance Unity Service Request Protocol
+nusdp-disc      49001/udp               # Nuance Unity Service Discovery Protocol
+# Updated additional list from IANA with all missing services 05/05/2017 done by Karl Vogel
+mit-ml-dev      85/tcp                  # MIT ML Device
+mit-ml-dev      85/udp                  # MIT ML Device
+rap             256/tcp                 # Route Access Protocol
+rap             256/udp                 # Route Access Protocol
+pt-tls          271/tcp                 # IETF Network Endpoint Assessment (PT-TLS)
+meter           571/tcp                 # udemon
+meter           571/udp                 # udemon
+dlep            854/tcp                 # Dynamic Link Exchange Protocol (DLEP)
+dlep            854/udp                 # Dynamic Link Exchange Protocol (DLEP)
+accessbuilder   888/udp                 # AccessBuilder
+webpush         1001/tcp                # HTTP Web Push
+pip             1321/tcp                # PIP
+pip             1321/udp                # PIP
+csdmbase        1471/tcp                # csdmbase
+csdmbase        1471/udp                # csdmbase
+csdm            1472/tcp                # csdm
+csdm            1472/udp                # csdm
+ngr-t           1528/udp                # NGR transport for mobile ad-hoc networks
+nmsp            1790/tcp                # Narrative Media Streaming Protocol
+nmsp            1790/udp                # Narrative Media Streaming Protocol
+uma             1797/tcp                # Universal Management Architecture
+uma             1797/udp                # Universal Management Architecture
+raid-cd         2013/udp                # raid
+dls             2047/tcp                #
+dls             2047/udp                #
+nvd             2329/tcp                # NVD User
+nvd             2329/udp                # NVD User
+swarm           2377/tcp                # RPC interface for Docker Swarm
+msp             2438/tcp                # Message send protocol?
+msp             2438/udp                # Message send protocol?
+unicontrol      2499/tcp                # UniControl
+unicontrol      2499/udp                # UniControl
+nmsigport       2839/tcp                # NMSigPort
+nmsigport       2839/udp                # NMSigPort
+fxp             2849/tcp                # FXP Communication
+fxp             2849/udp                # FXP Communication
+epp             3044/tcp                # EndPoint Protocol
+epp             3044/udp                # EndPoint Protocol
+creativeserver  3364/tcp                # Creative Server
+creativeserver  3364/udp                # Creative Server
+contentserver   3365/tcp                # Content Server
+contentserver   3365/udp                # Content Server
+creativepartnr  3366/tcp                # Creative Partner
+creativepartnr  3366/udp                # Creative Partner
+udt-os          3900/tcp                # Unidata UDT OS
+udt-os          3900/udp                # Unidata UDT OS
+npp             4045/tcp                # Network Paging Protocol
+npp             4045/udp                # Network Paging Protocol
+hctl            4197/tcp                # Harman HControl Protocol
+hctl            4197/udp                # Harman HControl Protocol
+trinity-dist    4711/sctp               # Trinity Trust Network Node Communication
+trinity-dist    4711/tcp                # Trinity Trust Network Node Communication
+trinity-dist    4711/udp                # Trinity Trust Network Node Communication
+intelliadm-disc 4746/udp                # IntelliAdmin Discovery
+gre-in-udp      4754/udp                # GRE-in-UDP Encapsulation
+gre-udp-dtls    4755/udp                # GRE-in-UDP Encapsulation with DTLS
+RDCenter        4756/tcp                # Reticle Decision Center
+converge        4774/tcp                # Converge RPC
+mftp            5402/tcp                # OmniCast MFTP
+mftp            5402/udp                # OmniCast MFTP
+cbus            5550/tcp                # Model Railway control using CBUS protocol
+storageos       5705/tcp                # StorageOS REST API
+ricardo-lm      6148/tcp                # Ricardo North America License Manager
+ricardo-lm      6148/udp                # Ricardo North America License Manager
+ieee11073-20701 6464/tcp                # Medical device communication
+ieee11073-20701 6464/udp                # Medical device communication
+nexgen-aux      6629/tcp                #
+nexgen-aux      6629/udp                #
+rtimeviewer     6900/tcp                # R*TIME Viewer Data Interface
+spg             7016/tcp                # SPG Controls Carrier
+spg             7016/udp                # SPG Controls Carrier
+grasp           7017/tcp                # GeneRic Autonomic Signaling Protocol
+grasp           7017/udp                # GeneRic Autonomic Signaling Protocol
+pon-ictp        7202/tcp                # Inter-Channel Termination Protocol (ICTP)
+openit          7478/tcp                # IT Asset Management
+coherence-disc  7574/udp                # Oracle Coherence Cluster discovery service
+bolt            7687/tcp                # Bolt database connection
+nfapi           7701/sctp               # SCF nFAPI defining MAC/PHY split
+wpl-analytics   8006/tcp                # World Programming analytics
+wpl-disc        8006/udp                # World Programming analytics discovery
+ucs-isc         8070/tcp                # Oracle Communication Indexed Search Converter
+mles            8077/tcp                # Client-server data distribution
+opsmessaging    8090/tcp                # Vehicle to station messaging
+robot-remote    8270/tcp                # Robot Framework Remote Library Interface
+aritts          8423/tcp                # Aristech text-to-speech server
+ssports-bcast   8808/udp                # STATSports Broadcast Service
+CardWeb-IO      9060/tcp                # CardWeb request-response I/O exchange
+CardWeb-RT      9060/udp                # CardWeb realtime device data
+pumpkindb       9981/tcp                # Event sourcing database engine/language
+abb-hw          10020/tcp               # Hardware configuration and maintenance
+tile-ml         10261/tcp               # Tile remote machine learning
+xpra            14500/tcp               # xpra network protocol
+vdmmesh-disc    18668/udp               # Manufacturing Execution Systems Mesh Comm
+vdmmesh         18668/tcp               # Manufacturing Execution Systems Mesh Comm
+cora-disc       19220/udp               # Discovery for Client Connection ... Service
+cora            19220/tcp               # Client Connection Mgmt/Data Exchange Service
+aigairserver    21221/tcp               # Services for Air Server
+ka-kdp          31016/udp               # Kollective Agent Kollective Delivery
+ka-sddp         31016/tcp               # Kollective Agent Secure Distributed Delivery
+edi_service     34567/udp               # dhanalakshmi.org EDI Service
+axio-disc       35100/tcp               # Axiomatic discovery protocol
+axio-disc       35100/udp               # Axiomatic discovery protocol
+pmwebapi        44323/tcp               # Performance Co-Pilot client HTTP API
+cloudcheck-ping 45514/udp               # ASSIA CloudCheck WiFi Management keepalive
+cloudcheck      45514/tcp               # ASSIA CloudCheck WiFi Management System
+spremotetablet  46998/tcp               # Capture handwritten signatures

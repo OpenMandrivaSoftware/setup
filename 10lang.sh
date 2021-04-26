@@ -1,10 +1,10 @@
 # /etc/profile.d/lang.sh - set i18n stuff
 
 # revert special console/X11 settings if needed
-if [ "$LC_SOURCED_CONSOLE" = 1 -a -n "$DISPLAY" ]; then
+if [ "$LC_SOURCED_CONSOLE" = 1 ] && [ -n "$DISPLAY" ]; then
     unset LC_SOURCED
     unset LC_SOURCED_CONSOLE
-elif [ "$LC_SOURCED_X11" = 1 -a -z "$DISPLAY" ]; then
+elif [ "$LC_SOURCED_X11" = 1 ] && [ -z "$DISPLAY" ]; then
     unset LC_SOURCED
     unset LC_SOURCED_X11
 fi
@@ -13,7 +13,7 @@ fi
 # if system wide and user config are mixed and different, umpredictable
 # things will happen...
 for langfile in "$HOME/.i18n" /etc/locale.conf ; do
-    [ -f $langfile -a "$LC_SOURCED" != 1 ] && . $langfile && LC_SOURCED=1 && export LC_SOURCED
+    [ -f $langfile ] && [ "$LC_SOURCED" != 1 ] && . $langfile && LC_SOURCED=1 && export LC_SOURCED
 done
 
 if [ "$LC_SOURCED" = 1 ]; then
@@ -57,7 +57,7 @@ if [ "$LC_SOURCED" = 1 ]; then
     if [ -n "$LANG" ]; then
       case $LANG in
     	*.utf8*|*.UTF-8*)
-    	if [ "$TERM" = "linux" ] && `echo $consoletype | grep --quiet -e '/dev/tty'`; then
+    	if [ "$TERM" = "linux" ] && $(echo $consoletype | grep --quiet -e '/dev/tty'); then
     	    	case $LANG in 
     	    		ja*) LANG=en_US.UTF-8 ;;
     	    		ko*) LANG=en_US.UTF-8 ;;
@@ -72,7 +72,7 @@ if [ "$LC_SOURCED" = 1 ]; then
         fi
 	;;
 	*)
-	if [ "$TERM" = "linux" ] && `echo $consoletype | grep --quiet -e '/dev/tty'`; then
+	if [ "$TERM" = "linux" ] && $(echo $consoletype | grep --quiet -e '/dev/tty'); then
     	    	case $LANG in
     	    		ja*) LANG=en_US ;;
     	    		ko*) LANG=en_US ;;

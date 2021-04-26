@@ -15,7 +15,7 @@ if ($?prompt) then
   if ($?tcsh) then
     set prompt='[%n@%m %c]$ ' 
   else
-    set prompt=\[`id -nu`@`hostname -s`\]\$\ 
+    set prompt=\[`id -nu`@`/usr/bin/hostnamectl --transient | cut -d'.' -f1`\]\$\ 
   endif
 else
   # nothing more to do for non-interactive shell
