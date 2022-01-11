@@ -6,37 +6,36 @@
 # in security high, /usr/bin is 751, aka non-readable
 # using unhash fixes the pb
 if (! -r /usr/bin) then
-  unhash
+	unhash
 endif
 
 if ( $uid == 0 ) limit coredumpsize 1000000
 
 if ($?prompt) then
-  if ($?tcsh) then
-    set prompt='[%n@%m %c]$ ' 
-  else
-    set prompt=\[`id -nu`@`/usr/bin/hostnamectl --transient | cut -d'.' -f1`\]\$\ 
-  endif
+	if ($?tcsh) then
+		set prompt='[%n@%m %c]$ ' 
+	else
+		set prompt=\[`id -nu`@`/usr/bin/hostnamectl --transient | cut -d'.' -f1`\]\$\ 
+	endif
 else
-  # nothing more to do for non-interactive shell
-  goto OUT
+	# nothing more to do for non-interactive shell
+	goto OUT
 endif
 
 test -d /etc/profile.d
 if ($status == 0) then
-        set nonomatch
-        foreach i ( /etc/profile.d/*.csh )
-                test -r $i
-                if ($status == 0) then
+	set nonomatch
+	foreach i ( /etc/profile.d/*.csh )
+		test -r $i
+		if ($status == 0) then
 			if ( $shlvl == 1 ) then
 				$shell -f $i && source $i || echo "/etc/csh.cshrc: error in $i"
 			else
 				source $i
 			endif
-                endif
-        end
-        unset i nonomatch
+		endif
+	end
+	unset i nonomatch
 endif
-
 
 OUT:

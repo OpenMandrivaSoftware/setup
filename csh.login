@@ -11,7 +11,7 @@ endif
 # in security high, /usr/bin is 751, aka non-readable
 # using unhash *after modifying PATH* fixes the pb
 if (! -r /usr/bin) then
-  unhash
+	unhash
 endif
 
 limit coredumpsize unlimited

@@ -3,13 +3,13 @@
 
 loginsh=1
 
-if [ "$UID" -ge 500 ]; then
-    if ! echo ${PATH} |grep -q /usr/local/games ; then
-	PATH=$PATH:/usr/local/games
-    fi
-    if ! echo ${PATH} | grep -q /usr/games ; then
-	PATH=$PATH:/usr/games
-    fi
+if [ "$UID" -ge 1000 ]; then
+	if ! echo ${PATH} |grep -q /usr/local/games ; then
+		PATH=$PATH:/usr/local/games
+	fi
+	if ! echo ${PATH} | grep -q /usr/games ; then
+		PATH=$PATH:/usr/games
+	fi
 fi
 
 umask 022
@@ -22,7 +22,7 @@ HOSTNAME="$(/usr/bin/hostnamectl --transient 2>/dev/null)"
 HISTSIZE=1000
 
 if [ -z "$INPUTRC" ] && [ ! -f "$HOME/.inputrc" ]; then
-    INPUTRC=/etc/inputrc
+	INPUTRC=/etc/inputrc
 fi
 
 # some old programs still use it (eg: "man"), and it is also
@@ -33,9 +33,9 @@ export PATH PS1 USER LOGNAME MAIL HOSTNAME INPUTRC NLSPATH
 export HISTCONTROL HISTSIZE 
 
 for i in /etc/profile.d/*.sh ; do
-    if [ -r "$i" ]; then
-	. "$i"
-    fi
+	if [ -r "$i" ]; then
+		. "$i"
+	fi
 done
 
 unset i
