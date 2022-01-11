@@ -18,7 +18,7 @@ USER="$(id -un)"
 LOGNAME=$USER
 MAIL="/var/spool/mail/$USER"
 HISTCONTROL=ignoredups
-HOSTNAME="$(/usr/bin/hostnamectl 2>/dev/null)"
+HOSTNAME="$(/usr/bin/hostnamectl --transient 2>/dev/null)"
 HISTSIZE=1000
 
 if [ -z "$INPUTRC" ] && [ ! -f "$HOME/.inputrc" ]; then
