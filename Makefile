@@ -1,5 +1,5 @@
 PACKAGE = setup
-VERSION = 2.9.4
+VERSION = 2.9.5
 GITPATH = git@github.com:OpenMandrivaSoftware/setup.git
 
 LIST =	csh.cshrc csh.login ethertypes host.conf hosts.allow hosts.deny inputrc \
@@ -28,6 +28,8 @@ install:
 	install -m644 group -D $(DESTDIR)/etc/group
 	sed -e 's/:[0-9]\+:/::/g' group > $(DESTDIR)/etc/gshadow
 	install -m644 passwd -D $(DESTDIR)/etc/passwd
+	install -m644 passwd -D $(DESTDIR)/etc/subgid
+	install -m644 passwd -D $(DESTDIR)/etc/subuid
 	sed -e "s/:.*/:*:`expr $(shell date +%s) / 86400`:0:99999:7:::/" passwd > $(DESTDIR)/etc/shadow
 	sed -i -e 's/^\([^:]\+\):[^:]*:/\1:x:/' $(DESTDIR)/etc/{passwd,group}
 
