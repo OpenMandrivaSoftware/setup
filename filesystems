@@ -12,5 +12,5 @@ reiserfs
 reiser4
 vfat
 hfs
-hpfs
+hfsplus
 *

@@ -1,8 +1,5 @@
-## Mandriva Linux Configuration
-# (c) Mandriva 1999-2005
-# Chmouel Boudjnah, Pablo Saratxaga <pablo@mandriva.com> 
-#	$Id: inputrc 105875 2005-12-07 06:56:46Z flepied $	
-
+# do not bell on tab-completion
+#set bell-style none
 
 # Show all if ambigious.
 set show-all-if-ambiguous on
@@ -31,24 +28,38 @@ $if mode=emacs
 
 "[1~": beginning-of-line	# Home
 "[4~": end-of-line		# End
+# for linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
 # commented out keymappings for pgup/pgdown to reach begin/end of history
 #"\e[5~": beginning-of-history
 #"\e[6~": end-of-history
 "\e[5~": history-search-backward
 "\e[6~": history-search-forward
+"\e[3~": delete-char
+"\e[2~": overwrite-mode
+"\e[5C": forward-word
+"\e[5D": backward-word
+# on gnome-terminal (mdvbz#36287)
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
 
 # typing the beginning of a previous command then
 # PgUp/PgDw cycles trough history only for matching entries
 "[5~": history-search-backward	# Previous
 "[6~": history-search-forward		# Next
 
-# those two are for rxvt
-"\e[7~":beginning-of-line
-"\e[8~":end-of-line
+# for rxvt
+"\e[7~": beginning-of-line
+"\e[8~": end-of-line
 "\eOc": forward-word
 "\eOd": backward-word
 
-# on some xterm
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# for freebsd console
 "\e[H": beginning-of-line
 "\e[F": end-of-line
 
@@ -94,10 +105,6 @@ $endif
 "\eOA":         previous-history
 "\eOB":         next-history
 "\eOE":         re-read-init-file
-
-# on gnome-terminal (mdvbz#36287)
-"\e[1;5D": backward-word
-"\e[1;5C": forward-word
 
 # emacs mode
 $endif
